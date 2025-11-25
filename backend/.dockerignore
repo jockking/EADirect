@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+.coverage
+*.log
+
+# Data and uploads (mounted as volumes)
+data/
+uploads/*
+!uploads/.gitignore
+
+# Environment files
+.env
+database.config.json
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Documentation
+README.md
+*.md
+
+# Tests
+tests/
+test_*.py

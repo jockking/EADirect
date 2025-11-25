@@ -38,3 +38,7 @@ backend/data/
 # Build
 build/
 *.egg
+
+# Docker
+.env.docker
+docker-compose.override.yml

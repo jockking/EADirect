@@ -1,0 +1,24 @@
+# Docker Compose Override Example
+# Copy this file to docker-compose.override.yml for development customization
+# docker-compose automatically merges this with docker-compose.yml
+
+version: '3.8'
+
+services:
+  # Development backend with hot reload
+  backend:
+    volumes:
+      # Mount source code for hot reload (uncomment for development)
+      # - ./backend:/app
+      # Don't override venv
+      # - /app/venv
+    environment:
+      # Override environment variables for development
+      - DEBUG=true
+    # Use reload for development
+    # command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Expose postgres for local development tools
+  postgres:
+    ports:
+      - "5433:5432"  # Map to different host port to avoid conflicts
