@@ -2,8 +2,6 @@
 # Copy this file to docker-compose.override.yml for development customization
 # docker-compose automatically merges this with docker-compose.yml
 
-version: '3.8'
-
 services:
   # Development backend with hot reload
   backend:
