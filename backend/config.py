@@ -1,4 +1,5 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field
 from typing import List
 import json
 import os
@@ -6,6 +7,12 @@ from pathlib import Path
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        extra="ignore"
+    )
+
     repo_path: str = "./data/architecture-repo"
     backend_port: int = 8000
     cors_origins: List[str] = ["http://localhost:3000", "http://localhost:5173"]
@@ -13,30 +20,15 @@ class Settings(BaseSettings):
     # Database settings
     # These can be set via environment variables: DATABASE_HOST, DATABASE_PORT, etc.
     # Or loaded from database.config.json file
-    database_host: str = "localhost"
-    database_port: int = 5432
-    database_name: str = "enterprise_architecture"
-    database_user: str = "postgres"
-    database_password: str = ""
+    database_host: str = Field(default="localhost", alias="DATABASE_HOST")
+    database_port: int = Field(default=5432, alias="DATABASE_PORT")
+    database_name: str = Field(default="enterprise_architecture", alias="DATABASE_NAME")
+    database_user: str = Field(default="postgres", alias="DATABASE_USER")
+    database_password: str = Field(default="", alias="DATABASE_PASSWORD")
 
     # Security settings
-    secret_key: str = "your-secret-key-change-in-production"
-    allowed_origins: str = "http://localhost:3000,http://localhost:5173"
-
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
-
-        # Map old property names to environment variable names
-        fields = {
-            'database_host': {'env': 'DATABASE_HOST'},
-            'database_port': {'env': 'DATABASE_PORT'},
-            'database_name': {'env': 'DATABASE_NAME'},
-            'database_user': {'env': 'DATABASE_USER'},
-            'database_password': {'env': 'DATABASE_PASSWORD'},
-            'secret_key': {'env': 'SECRET_KEY'},
-            'allowed_origins': {'env': 'ALLOWED_ORIGINS'}
-        }
+    secret_key: str = Field(default="your-secret-key-change-in-production", alias="SECRET_KEY")
+    allowed_origins: str = Field(default="http://localhost:3000,http://localhost:5173", alias="ALLOWED_ORIGINS")
 
     def load_database_config(self):
         """Load database configuration from database.config.json (fallback if env vars not set)"""

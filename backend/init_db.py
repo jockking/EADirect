@@ -14,15 +14,15 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def create_database():
     """Create the database if it doesn't exist"""
-    print(f"Checking if database '{settings.db_name}' exists...")
+    print(f"Checking if database '{settings.database_name}' exists...")
 
     try:
         # Connect to postgres database to create our database
         conn = psycopg2.connect(
-            host=settings.db_host,
-            port=settings.db_port,
-            user=settings.db_user,
-            password=settings.db_password,
+            host=settings.database_host,
+            port=settings.database_port,
+            user=settings.database_user,
+            password=settings.database_password,
             database="postgres"
         )
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -31,16 +31,16 @@ def create_database():
         # Check if database exists
         cursor.execute(
             "SELECT 1 FROM pg_database WHERE datname = %s",
-            (settings.db_name,)
+            (settings.database_name,)
         )
         exists = cursor.fetchone()
 
         if not exists:
-            print(f"Creating database '{settings.db_name}'...")
-            cursor.execute(f'CREATE DATABASE {settings.db_name}')
-            print(f"✅ Database '{settings.db_name}' created successfully!")
+            print(f"Creating database '{settings.database_name}'...")
+            cursor.execute(f'CREATE DATABASE {settings.database_name}')
+            print(f"✅ Database '{settings.database_name}' created successfully!")
         else:
-            print(f"✅ Database '{settings.db_name}' already exists.")
+            print(f"✅ Database '{settings.database_name}' already exists.")
 
         cursor.close()
         conn.close()
