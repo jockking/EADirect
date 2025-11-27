@@ -76,7 +76,7 @@ function AppContent() {
               }}
               >
                 {user.profileImage ? (
-                  <img src={`http://localhost:8000${user.profileImage}`} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={`/api${user.profileImage}`} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   user.name.split(' ').map(n => n[0]).join('').toUpperCase()
                 )}

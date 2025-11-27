@@ -14,6 +14,40 @@ A comprehensive enterprise architecture management system for tracking business 
 - **RESTful API**: Complete OpenAPI documentation
 - **Audit Trails**: Full change history for all entities
 
+## Screenshots
+
+### Login Page
+![Login Page](screenshots/01-login.png)
+*Secure authentication with email/password. SSO integration ready for future implementation.*
+
+### Dashboard
+![Dashboard](screenshots/02-dashboard.png)
+*Overview of all enterprise architecture artifacts with quick statistics and actions.*
+
+### Business Applications
+![Business Applications List](screenshots/03-business-apps-list.png)
+*Comprehensive application portfolio management with lifecycle tracking.*
+
+### Architecture Decision Records (ADRs)
+![ADRs List](screenshots/04-adrs-list.png)
+*Document architectural decisions with multiple options and trade-off analysis.*
+
+### Technical Debt Tracking
+![Technical Debt List](screenshots/05-tech-debt-list.png)
+*Track and prioritize technical debt with filtering by priority and status.*
+
+### Supplier & Product Management
+![Suppliers](screenshots/06-suppliers.png)
+*Manage supplier relationships and product catalogs in one place.*
+
+### Search Functionality
+![Search](screenshots/07-search.png)
+*Full-text search across all architecture artifacts for quick discovery.*
+
+### User Management (Admin)
+![Admin User Management](screenshots/08-admin-users.png)
+*Role-based access control with admin and user roles.*
+
 ## Quick Start with Docker (Recommended)
 
 The fastest way to get EA Direct running is with Docker:

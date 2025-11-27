@@ -107,7 +107,7 @@ function Profile() {
       const formData = new FormData()
       formData.append('file', croppedBlob, 'profile.jpg')
 
-      const response = await fetch(`http://localhost:8000/users/${user.id}/profile-image`, {
+      const response = await fetch(`/api/users/${user.id}/profile-image`, {
         method: 'POST',
         body: formData
       })
@@ -171,7 +171,7 @@ function Profile() {
         payload.password = formData.newPassword
       }
 
-      const response = await fetch(`http://localhost:8000/users/${user.id}`, {
+      const response = await fetch(`/api/users/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -271,7 +271,7 @@ function Profile() {
             }}>
               {user.profileImage ? (
                 <img
-                  src={`http://localhost:8000${user.profileImage}`}
+                  src={`/api${user.profileImage}`}
                   alt={user.name}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   onError={(e) => {

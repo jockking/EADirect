@@ -10,7 +10,7 @@ function UserList() {
     // Fetch users from API
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:8000/users')
+        const response = await fetch('/api/users')
         if (!response.ok) {
           throw new Error('Failed to fetch users')
         }
@@ -41,7 +41,7 @@ function UserList() {
   const handleDelete = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        const response = await fetch(`http://localhost:8000/users/${userId}`, {
+        const response = await fetch(`/api/users/${userId}`, {
           method: 'DELETE'
         })
 

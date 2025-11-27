@@ -45,8 +45,8 @@ function UserForm() {
 
     try {
       const url = isEdit
-        ? `http://localhost:8000/users/${id}`
-        : 'http://localhost:8000/users'
+        ? `/api/users/${id}`
+        : '/api/users'
 
       const method = isEdit ? 'PUT' : 'POST'
 
