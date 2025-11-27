@@ -23,7 +23,7 @@ The fastest way to get EA Direct running is with Docker:
 - Docker (version 20.10 or higher)
 - Docker Compose (version 2.0 or higher)
 
-### Deploy in 3 Steps
+### Deploy in 2 Steps
 
 1. **Clone the repository:**
 ```bash
@@ -36,10 +36,7 @@ cd EADirect
 docker compose up -d
 ```
 
-3. **Initialize the database:**
-```bash
-docker compose exec backend python init_db.py
-```
+That's it! The database will be automatically initialized on first startup.
 
 ### Access the Application
 

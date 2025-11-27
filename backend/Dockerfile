@@ -21,6 +21,9 @@ COPY . .
 # Create uploads directory
 RUN mkdir -p uploads
 
+# Make entrypoint script executable
+RUN chmod +x docker-entrypoint.sh
+
 # Expose port
 EXPOSE 8000
 
@@ -28,5 +31,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:8000/docs')" || exit 1
 
-# Run the application
-CMD ["python", "main.py"]
+# Set entrypoint
+ENTRYPOINT ["./docker-entrypoint.sh"]

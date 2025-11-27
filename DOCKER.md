@@ -26,10 +26,10 @@ cp .env.docker.example .env.docker
 
 Edit `.env.docker` to change default passwords and configuration.
 
-### 3. Build and Start Services
+### 3. Start the Application
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will:
@@ -37,20 +37,15 @@ This will:
 - Pull the PostgreSQL image
 - Create a network for the services
 - Start all services in the background
+- **Automatically initialize the database** on first run
 
-### 4. Initialize the Database
+The database initialization happens automatically via the backend entrypoint script, which:
+- Waits for PostgreSQL to be ready
+- Creates all database tables
+- Creates default admin and user accounts
+- Starts the API server
 
-On first run, initialize the database:
-
-```bash
-docker-compose exec backend python init_db.py
-```
-
-This creates:
-- Database tables
-- Default admin user (email: admin@example.com, password: admin)
-
-### 5. Access the Application
+### 4. Access the Application
 
 - **Frontend**: http://localhost
 - **Backend API**: http://localhost:8000
