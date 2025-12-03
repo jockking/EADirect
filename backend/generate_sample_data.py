@@ -131,7 +131,7 @@ def generate_business_apps(db: Session, products: list):
             "status": "active",
             "hosting_type": "cloud",
             "development_type": "cots",
-            "resilience_category": "tier-1",
+            "resilience_category": "platinum",
             "product_id": products[1].id  # Microsoft 365
         },
         {
@@ -142,7 +142,7 @@ def generate_business_apps(db: Session, products: list):
             "status": "active",
             "hosting_type": "on-premise",
             "development_type": "cots",
-            "resilience_category": "tier-1",
+            "resilience_category": "platinum",
             "product_id": products[9].id  # Oracle Database
         },
         {
@@ -153,7 +153,7 @@ def generate_business_apps(db: Session, products: list):
             "status": "active",
             "hosting_type": "cloud",
             "development_type": "custom",
-            "resilience_category": "tier-2",
+            "resilience_category": "gold",
             "product_id": products[0].id  # Azure
         },
         {
@@ -164,7 +164,7 @@ def generate_business_apps(db: Session, products: list):
             "status": "deprecated",
             "hosting_type": "on-premise",
             "development_type": "custom",
-            "resilience_category": "tier-3"
+            "resilience_category": "bronze"
         },
         {
             "name": "Mobile Sales App",
@@ -174,7 +174,7 @@ def generate_business_apps(db: Session, products: list):
             "status": "planned",
             "hosting_type": "cloud",
             "development_type": "custom",
-            "resilience_category": "tier-2",
+            "resilience_category": "silver",
             "product_id": products[4].id  # Amazon EC2
         },
         {
@@ -185,7 +185,7 @@ def generate_business_apps(db: Session, products: list):
             "status": "active",
             "hosting_type": "cloud",
             "development_type": "cots",
-            "resilience_category": "tier-2",
+            "resilience_category": "gold",
             "product_id": products[11].id  # Confluence
         }
     ]
@@ -264,24 +264,24 @@ def generate_adrs(db: Session):
                 {
                     "name": "Amazon Web Services (AWS)",
                     "description": "Comprehensive cloud platform with global presence",
-                    "pros": "Market leader, extensive services, strong ecosystem, proven scalability",
-                    "cons": "Vendor lock-in, complex pricing, steep learning curve",
+                    "pros": ["Market leader", "Extensive services", "Strong ecosystem", "Proven scalability"],
+                    "cons": ["Vendor lock-in", "Complex pricing", "Steep learning curve"],
                     "cost_estimate": "Moderate to High",
                     "effort_estimate": "6-8 months migration"
                 },
                 {
                     "name": "Microsoft Azure",
                     "description": "Microsoft's enterprise cloud platform",
-                    "pros": "Excellent Microsoft integration, hybrid cloud support, enterprise features",
-                    "cons": "Smaller service catalog than AWS, regional availability",
+                    "pros": ["Excellent Microsoft integration", "Hybrid cloud support", "Enterprise features"],
+                    "cons": ["Smaller service catalog than AWS", "Regional availability limitations"],
                     "cost_estimate": "Moderate",
                     "effort_estimate": "5-7 months migration"
                 },
                 {
                     "name": "Google Cloud Platform",
                     "description": "Google's cloud infrastructure and services",
-                    "pros": "Strong in AI/ML, competitive pricing, excellent networking",
-                    "cons": "Smaller market share, fewer enterprise features",
+                    "pros": ["Strong in AI/ML", "Competitive pricing", "Excellent networking"],
+                    "cons": ["Smaller market share", "Fewer enterprise features"],
                     "cost_estimate": "Low to Moderate",
                     "effort_estimate": "5-7 months migration"
                 }
@@ -322,7 +322,7 @@ def generate_tech_debt(db: Session, adrs: list):
             "description": "Single database bottleneck limiting application scalability",
             "owner": "Database Team",
             "priority": "critical",
-            "status": "in_progress",
+            "status": "in-progress",
             "impact": "Slow query performance, deployment downtime, scaling limitations",
             "effort_estimate": "6-8 months",
             "affected_systems": ["ERP", "CRM", "Inventory System"],
