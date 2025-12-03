@@ -38,35 +38,40 @@ def generate_suppliers(db: Session):
             "contact_email": "support@microsoft.com",
             "contact_phone": "+1-425-882-8080",
             "website": "https://www.microsoft.com",
-            "description": "Global technology company providing cloud services, software, and enterprise solutions"
+            "description": "Global technology company providing cloud services, software, and enterprise solutions",
+            "address": "One Microsoft Way, Redmond, WA 98052, USA"
         },
         {
             "name": "Amazon Web Services",
             "contact_email": "aws-support@amazon.com",
             "contact_phone": "+1-206-266-4064",
             "website": "https://aws.amazon.com",
-            "description": "Leading cloud computing platform offering scalable infrastructure and services"
+            "description": "Leading cloud computing platform offering scalable infrastructure and services",
+            "address": "410 Terry Avenue North, Seattle, WA 98109, USA"
         },
         {
             "name": "Red Hat",
             "contact_email": "support@redhat.com",
             "contact_phone": "+1-919-754-3700",
             "website": "https://www.redhat.com",
-            "description": "Enterprise open source solutions provider for hybrid cloud infrastructure"
+            "description": "Enterprise open source solutions provider for hybrid cloud infrastructure",
+            "address": "100 East Davie Street, Raleigh, NC 27601, USA"
         },
         {
             "name": "Oracle Corporation",
             "contact_email": "support@oracle.com",
             "contact_phone": "+1-650-506-7000",
             "website": "https://www.oracle.com",
-            "description": "Database and enterprise software solutions for business operations"
+            "description": "Database and enterprise software solutions for business operations",
+            "address": "2300 Oracle Way, Austin, TX 78741, USA"
         },
         {
             "name": "Atlassian",
             "contact_email": "support@atlassian.com",
             "contact_phone": "+61-2-9262-5188",
             "website": "https://www.atlassian.com",
-            "description": "Collaboration and productivity software for development teams"
+            "description": "Collaboration and productivity software for development teams",
+            "address": "Level 6, 341 George Street, Sydney NSW 2000, Australia"
         }
     ]
 

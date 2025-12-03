@@ -6,7 +6,7 @@ function SupplierManagement() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [view, setView] = useState('list') // 'list', 'addSupplier', 'addProduct'
+  const [view, setView] = useState('list') // 'list', 'addSupplier', 'editSupplier', 'addProduct'
   const [selectedSupplier, setSelectedSupplier] = useState(null)
   const [formData, setFormData] = useState({})
 
@@ -42,6 +42,32 @@ function SupplierManagement() {
     } catch (err) {
       setError('Failed to create supplier')
     }
+  }
+
+  const handleUpdateSupplier = async (e) => {
+    e.preventDefault()
+    try {
+      await supplierApi.update(selectedSupplier, formData)
+      setFormData({})
+      setSelectedSupplier(null)
+      setView('list')
+      loadData()
+    } catch (err) {
+      setError('Failed to update supplier')
+    }
+  }
+
+  const handleEditSupplier = (supplier) => {
+    setSelectedSupplier(supplier.id)
+    setFormData({
+      name: supplier.name,
+      description: supplier.description || '',
+      website: supplier.website || '',
+      contact_email: supplier.contact_email || '',
+      contact_phone: supplier.contact_phone || '',
+      address: supplier.address || ''
+    })
+    setView('editSupplier')
   }
 
   const handleSubmitProduct = async (e) => {
@@ -106,10 +132,46 @@ function SupplierManagement() {
           </div>
           <div className="form-group">
             <label>Address</label>
-            <textarea value={formData.address || ''} onChange={(e) => setFormData({...formData, address: e.target.value})} />
+            <textarea value={formData.address || ''} onChange={(e) => setFormData({...formData, address: e.target.value})} placeholder="Full address for map display" />
           </div>
           <button type="submit" className="button">Create Supplier</button>
           <button type="button" className="button-secondary" onClick={() => {setView('list'); setFormData({})}}>Cancel</button>
+        </form>
+      </div>
+    )
+  }
+
+  if (view === 'editSupplier') {
+    return (
+      <div className="card">
+        <h2>Edit Supplier</h2>
+        <form onSubmit={handleUpdateSupplier}>
+          <div className="form-group">
+            <label>Name *</label>
+            <input required value={formData.name || ''} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea value={formData.description || ''} onChange={(e) => setFormData({...formData, description: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Website</label>
+            <input value={formData.website || ''} onChange={(e) => setFormData({...formData, website: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Contact Email</label>
+            <input type="email" value={formData.contact_email || ''} onChange={(e) => setFormData({...formData, contact_email: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Contact Phone</label>
+            <input value={formData.contact_phone || ''} onChange={(e) => setFormData({...formData, contact_phone: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Address</label>
+            <textarea value={formData.address || ''} onChange={(e) => setFormData({...formData, address: e.target.value})} placeholder="Full address for map display" />
+          </div>
+          <button type="submit" className="button">Update Supplier</button>
+          <button type="button" className="button-secondary" onClick={() => {setView('list'); setFormData({}); setSelectedSupplier(null)}}>Cancel</button>
         </form>
       </div>
     )
@@ -193,7 +255,10 @@ function SupplierManagement() {
                     ))}
                   </ul>
                 </div>
-                <button className="button-danger" style={{alignSelf: 'start'}} onClick={() => handleDeleteSupplier(supplier.id)}>Delete Supplier</button>
+                <div style={{display: 'flex', gap: '0.5rem', alignSelf: 'start'}}>
+                  <button className="button-secondary" onClick={() => handleEditSupplier(supplier)}>Edit</button>
+                  <button className="button-danger" onClick={() => handleDeleteSupplier(supplier.id)}>Delete</button>
+                </div>
               </div>
             </div>
           ))}

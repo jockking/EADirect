@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FiPackage, FiFileText, FiAlertTriangle, FiShoppingBag, FiBox, FiDatabase } from 'react-icons/fi'
-import { dashboardApi } from '../api'
+import { FiPackage, FiFileText, FiAlertTriangle, FiShoppingBag, FiBox, FiDatabase, FiMapPin } from 'react-icons/fi'
+import { dashboardApi, supplierApi } from '../api'
 import axios from 'axios'
 
 function Home() {
   const [stats, setStats] = useState(null)
+  const [suppliers, setSuppliers] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [generatingSample, setGeneratingSample] = useState(false)
@@ -13,6 +14,7 @@ function Home() {
 
   useEffect(() => {
     loadDashboard()
+    loadSuppliers()
   }, [])
 
   const loadDashboard = async () => {
@@ -26,6 +28,15 @@ function Home() {
       console.error(err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const loadSuppliers = async () => {
+    try {
+      const response = await supplierApi.list()
+      setSuppliers(response.data)
+    } catch (err) {
+      console.error('Failed to load suppliers', err)
     }
   }
 
@@ -180,6 +191,67 @@ function Home() {
           color="#64748b"
         />
       </div>
+
+      {/* Supplier Map */}
+      {suppliers.filter(s => s.address).length > 0 && (
+        <div className="card" style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FiMapPin size={20} />
+              Supplier Locations
+            </h3>
+            <Link to="/suppliers">
+              <button className="button-secondary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}>
+                Manage Suppliers
+              </button>
+            </Link>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
+            {suppliers.filter(s => s.address).map(supplier => (
+              <div key={supplier.id} style={{
+                padding: '0.75rem',
+                background: '#f8f9fa',
+                borderRadius: '4px',
+                border: '1px solid #e9ecef',
+                display: 'flex',
+                alignItems: 'start',
+                gap: '0.75rem'
+              }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: '#64748b',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <FiMapPin size={18} color="white" />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: '500', color: '#2c3e50', marginBottom: '0.25rem' }}>
+                    {supplier.name}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: '#666', lineHeight: '1.4' }}>
+                    {supplier.address}
+                  </div>
+                  {supplier.website && (
+                    <a
+                      href={supplier.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none', marginTop: '0.25rem', display: 'inline-block' }}
+                    >
+                      Visit website →
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Recent Activity */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
