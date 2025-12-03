@@ -148,6 +148,12 @@ code {
   padding: 1.5rem 0;
   box-shadow: var(--shadow-sm);
   overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 74px; /* Height of the header */
+  bottom: 0;
+  width: 260px;
+  z-index: 90;
 }
 
 .sidebar-links {
@@ -662,6 +668,15 @@ button.button:hover {
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .card,
 .list-item {
   animation: fadeIn 0.3s ease-out;
@@ -722,6 +737,7 @@ button.button:hover {
 
   .app-sidebar {
     padding: 1rem 0;
+    width: 80px;
   }
 
   .sidebar-links {
@@ -809,6 +825,7 @@ button.button:hover {
 
   .app-sidebar {
     padding: 0.75rem 0;
+    width: 60px;
   }
 
   .sidebar-links {

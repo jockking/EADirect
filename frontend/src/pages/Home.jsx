@@ -1,22 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { FiPackage, FiFileText, FiAlertTriangle, FiShoppingBag, FiBox, FiDatabase, FiMapPin } from 'react-icons/fi'
+import { Link, useLocation } from 'react-router-dom'
+import { FiPackage, FiFileText, FiAlertTriangle, FiShoppingBag, FiBox, FiDatabase, FiMapPin, FiRefreshCw } from 'react-icons/fi'
 import { dashboardApi, supplierApi } from '../api'
 import axios from 'axios'
 import SupplierMap from '../components/SupplierMap'
 
 function Home() {
+  const location = useLocation()
   const [stats, setStats] = useState(null)
   const [suppliers, setSuppliers] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [generatingSample, setGeneratingSample] = useState(false)
   const [sampleMessage, setSampleMessage] = useState(null)
+  const [refreshingSuppliers, setRefreshingSuppliers] = useState(false)
 
   useEffect(() => {
     loadDashboard()
     loadSuppliers()
   }, [])
+
+  // Reload suppliers when navigating back to home page
+  useEffect(() => {
+    if (location.pathname === '/') {
+      loadSuppliers()
+    }
+  }, [location.pathname])
 
   const loadDashboard = async () => {
     try {
@@ -41,6 +50,15 @@ function Home() {
     }
   }
 
+  const handleRefreshSuppliers = async () => {
+    try {
+      setRefreshingSuppliers(true)
+      await loadSuppliers()
+    } finally {
+      setRefreshingSuppliers(false)
+    }
+  }
+
   const handleGenerateSampleData = async () => {
     if (!window.confirm('This will clear existing data and generate sample data. Continue?')) {
       return
@@ -51,9 +69,10 @@ function Home() {
       setSampleMessage(null)
       const response = await axios.post('/api/sample-data/generate')
       setSampleMessage({ type: 'success', text: response.data.message })
-      // Reload dashboard to show new data
+      // Reload dashboard and suppliers to show new data
       setTimeout(() => {
         loadDashboard()
+        loadSuppliers()
         setSampleMessage(null)
       }, 2000)
     } catch (err) {
@@ -201,11 +220,22 @@ function Home() {
               <FiMapPin size={20} />
               Supplier Locations
             </h3>
-            <Link to="/suppliers">
-              <button className="button-secondary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}>
-                Manage Suppliers
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                className="button-secondary"
+                style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.375rem' }}
+                onClick={handleRefreshSuppliers}
+                disabled={refreshingSuppliers}
+              >
+                <FiRefreshCw size={14} style={{ animation: refreshingSuppliers ? 'spin 1s linear infinite' : 'none' }} />
+                Refresh
               </button>
-            </Link>
+              <Link to="/suppliers">
+                <button className="button-secondary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}>
+                  Manage Suppliers
+                </button>
+              </Link>
+            </div>
           </div>
           <SupplierMap suppliers={suppliers} />
         </div>

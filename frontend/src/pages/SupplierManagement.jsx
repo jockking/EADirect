@@ -76,6 +76,7 @@ function SupplierManagement() {
     try {
       await productApi.create(formData)
       setFormData({})
+      setSelectedSupplier(null)
       setView('list')
       loadData()
     } catch (err) {
@@ -108,6 +109,12 @@ function SupplierManagement() {
       license_type: product.license_type || ''
     })
     setView('editProduct')
+  }
+
+  const handleAddProductForSupplier = (supplierId) => {
+    setSelectedSupplier(supplierId)
+    setFormData({ supplier_id: supplierId })
+    setView('addProduct')
   }
 
   const handleDeleteSupplier = async (id) => {
@@ -206,16 +213,28 @@ function SupplierManagement() {
   }
 
   if (view === 'addProduct') {
+    const supplierPreSelected = selectedSupplier !== null
     return (
       <div className="card">
-        <h2>Add New Product</h2>
+        <h2>Add New Product{supplierPreSelected && ` to ${suppliers.find(s => s.id === selectedSupplier)?.name}`}</h2>
         <form onSubmit={handleSubmitProduct}>
           <div className="form-group">
             <label>Supplier *</label>
-            <select required value={formData.supplier_id || ''} onChange={(e) => setFormData({...formData, supplier_id: e.target.value})}>
+            <select
+              required
+              value={formData.supplier_id || ''}
+              onChange={(e) => setFormData({...formData, supplier_id: e.target.value})}
+              disabled={supplierPreSelected}
+              style={supplierPreSelected ? {backgroundColor: '#f0f0f0', cursor: 'not-allowed'} : {}}
+            >
               <option value="">Select a supplier</option>
               {suppliers.map(s => (<option key={s.id} value={s.id}>{s.name}</option>))}
             </select>
+            {supplierPreSelected && (
+              <small style={{color: '#666', marginTop: '0.25rem', display: 'block'}}>
+                Supplier is pre-selected. Cancel and use "Add Product" from top menu to change supplier.
+              </small>
+            )}
           </div>
           <div className="form-group">
             <label>Product Name *</label>
@@ -312,7 +331,16 @@ function SupplierManagement() {
                   {supplier.website && <p><strong>Website:</strong> <a href={supplier.website} target="_blank" rel="noopener noreferrer">{supplier.website}</a></p>}
                   {supplier.contact_email && <p><strong>Email:</strong> {supplier.contact_email}</p>}
 
-                  <h4 style={{marginTop: '1rem'}}>Products ({products.filter(p => p.supplier_id === supplier.id).length})</h4>
+                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', marginBottom: '0.5rem'}}>
+                    <h4 style={{margin: 0}}>Products ({products.filter(p => p.supplier_id === supplier.id).length})</h4>
+                    <button
+                      className="button"
+                      style={{padding: '0.25rem 0.5rem', fontSize: '0.85em'}}
+                      onClick={() => handleAddProductForSupplier(supplier.id)}
+                    >
+                      + Add Product
+                    </button>
+                  </div>
                   <ul style={{listStyle: 'none', padding: 0}}>
                     {products.filter(p => p.supplier_id === supplier.id).map(product => (
                       <li key={product.id} style={{padding: '0.5rem', background: 'white', marginBottom: '0.5rem', borderRadius: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
