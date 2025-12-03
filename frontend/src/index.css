@@ -96,10 +96,10 @@ code {
 /* Top Header */
 .app-header {
   grid-area: header;
-  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
-  color: white;
-  padding: 1.25rem 2rem;
-  box-shadow: var(--shadow-md);
+  background: white;
+  color: var(--text-primary);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -109,30 +109,35 @@ code {
 }
 
 .app-header h1 {
-  font-size: 1.625rem;
+  font-size: 1.5rem;
   margin: 0;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.025em;
+  color: var(--text-primary);
+}
+
+.app-header-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .nav-logo {
-  width: 52px;
-  height: 52px;
-  background: white;
-  border-radius: var(--radius-md);
+  width: 48px;
+  height: 48px;
+  background: var(--primary-color);
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--primary-color);
-  box-shadow: var(--shadow-lg);
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
   transition: var(--transition);
 }
 
 .nav-logo:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-xl);
+  background: var(--primary-hover);
 }
 
 /* Sidebar Navigation */
@@ -202,7 +207,7 @@ code {
 }
 
 .sidebar-links a.active {
-  background: linear-gradient(to right, var(--primary-light), transparent);
+  background: var(--primary-light);
   color: var(--primary-color);
   font-weight: 600;
 }
@@ -361,58 +366,53 @@ a .button {
 /* Primary Button */
 .button,
 button.button {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  background: var(--primary-color);
 }
 
 .button:hover,
 button.button:hover {
-  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-dark) 100%);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* Secondary Button */
 .button-secondary {
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-hover) 100%);
+  background: var(--secondary-color);
 }
 
 .button-secondary:hover {
-  background: linear-gradient(135deg, var(--secondary-hover) 0%, var(--secondary-dark) 100%);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  background: var(--secondary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* Danger Button */
 .button-danger {
-  background: linear-gradient(135deg, var(--danger-color) 0%, var(--danger-hover) 100%);
+  background: var(--danger-color);
 }
 
 .button-danger:hover {
-  background: linear-gradient(135deg, var(--danger-hover) 0%, #b91c1c 100%);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  background: var(--danger-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* Success Button */
 .button-success {
-  background: linear-gradient(135deg, var(--success-color) 0%, var(--success-hover) 100%);
+  background: var(--success-color);
 }
 
 .button-success:hover {
-  background: linear-gradient(135deg, var(--success-hover) 0%, #047857 100%);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  background: var(--success-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* Warning Button */
 .button-warning {
-  background: linear-gradient(135deg, var(--warning-color) 0%, var(--warning-hover) 100%);
+  background: var(--warning-color);
 }
 
 .button-warning:hover {
-  background: linear-gradient(135deg, var(--warning-hover) 0%, #b45309 100%);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  background: var(--warning-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* Button States */
@@ -579,7 +579,7 @@ button.button:hover {
 }
 
 .error {
-  background: linear-gradient(135deg, var(--danger-light) 0%, rgba(254, 226, 226, 0.5) 100%);
+  background: var(--danger-light);
   color: var(--danger-hover);
   padding: 1.25rem 1.5rem;
   border-radius: var(--radius-md);
@@ -623,13 +623,13 @@ button.button:hover {
   padding: 1rem;
   border-left: 3px solid var(--primary-color);
   margin-bottom: 0.75rem;
-  background: linear-gradient(to right, var(--primary-light), transparent);
+  background: var(--background-secondary);
   border-radius: 0 var(--radius) var(--radius) 0;
   transition: var(--transition);
 }
 
 .history-entry:hover {
-  background: linear-gradient(to right, var(--primary-light), var(--background));
+  background: var(--primary-light);
   transform: translateX(4px);
   box-shadow: var(--shadow-sm);
 }

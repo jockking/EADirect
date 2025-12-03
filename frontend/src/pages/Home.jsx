@@ -107,9 +107,9 @@ function Home() {
   return (
     <div>
       {/* Welcome Banner */}
-      <div className="card" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', marginBottom: '1.5rem' }}>
-        <h2 style={{ margin: 0, marginBottom: '0.5rem' }}>Welcome to EA Direct</h2>
-        <p style={{ margin: 0, opacity: 0.9 }}>
+      <div className="card" style={{ background: 'white', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
+        <h2 style={{ margin: 0, marginBottom: '0.5rem', color: '#0f172a' }}>Welcome to EA Direct</h2>
+        <p style={{ margin: 0, color: '#64748b' }}>
           Your Enterprise Architecture Management Platform - Track applications, decisions, technical debt, and suppliers.
         </p>
       </div>
@@ -121,7 +121,7 @@ function Home() {
           title="Business Applications"
           value={stats.totals.business_apps}
           link="/business-apps"
-          color="#3498db"
+          color="#64748b"
           items={stats.business_apps_by_status}
         />
         <StatCard
@@ -129,7 +129,7 @@ function Home() {
           title="Architecture Decisions"
           value={stats.totals.adrs}
           link="/adrs"
-          color="#9b59b6"
+          color="#64748b"
           items={stats.adrs_by_status}
         />
         <StatCard
@@ -137,7 +137,7 @@ function Home() {
           title="Technical Debt"
           value={stats.totals.tech_debt}
           link="/tech-debt"
-          color="#e74c3c"
+          color="#64748b"
           items={stats.tech_debt_by_priority}
         />
         <StatCard
@@ -145,13 +145,13 @@ function Home() {
           title="Suppliers"
           value={stats.totals.suppliers}
           link="/suppliers"
-          color="#16a085"
+          color="#64748b"
         />
         <StatCard
           icon={FiBox}
           title="Products"
           value={stats.totals.products}
-          color="#27ae60"
+          color="#64748b"
         />
       </div>
 
