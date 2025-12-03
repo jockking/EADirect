@@ -6,8 +6,9 @@ function SupplierManagement() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [view, setView] = useState('list') // 'list', 'addSupplier', 'editSupplier', 'addProduct'
+  const [view, setView] = useState('list') // 'list', 'addSupplier', 'editSupplier', 'addProduct', 'editProduct'
   const [selectedSupplier, setSelectedSupplier] = useState(null)
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const [formData, setFormData] = useState({})
 
   useEffect(() => {
@@ -80,6 +81,33 @@ function SupplierManagement() {
     } catch (err) {
       setError('Failed to create product')
     }
+  }
+
+  const handleUpdateProduct = async (e) => {
+    e.preventDefault()
+    try {
+      await productApi.update(selectedProduct, formData)
+      setFormData({})
+      setSelectedProduct(null)
+      setView('list')
+      loadData()
+    } catch (err) {
+      setError('Failed to update product')
+    }
+  }
+
+  const handleEditProduct = (product) => {
+    setSelectedProduct(product.id)
+    setFormData({
+      name: product.name,
+      description: product.description || '',
+      version: product.version || '',
+      supplier_id: product.supplier_id,
+      product_url: product.product_url || '',
+      support_url: product.support_url || '',
+      license_type: product.license_type || ''
+    })
+    setView('editProduct')
   }
 
   const handleDeleteSupplier = async (id) => {
@@ -220,6 +248,49 @@ function SupplierManagement() {
     )
   }
 
+  if (view === 'editProduct') {
+    return (
+      <div className="card">
+        <h2>Edit Product</h2>
+        <form onSubmit={handleUpdateProduct}>
+          <div className="form-group">
+            <label>Supplier *</label>
+            <select required value={formData.supplier_id || ''} onChange={(e) => setFormData({...formData, supplier_id: e.target.value})}>
+              <option value="">Select a supplier</option>
+              {suppliers.map(s => (<option key={s.id} value={s.id}>{s.name}</option>))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Product Name *</label>
+            <input required value={formData.name || ''} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea value={formData.description || ''} onChange={(e) => setFormData({...formData, description: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Version</label>
+            <input value={formData.version || ''} onChange={(e) => setFormData({...formData, version: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Product URL</label>
+            <input value={formData.product_url || ''} onChange={(e) => setFormData({...formData, product_url: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>Support URL</label>
+            <input value={formData.support_url || ''} onChange={(e) => setFormData({...formData, support_url: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>License Type</label>
+            <input value={formData.license_type || ''} onChange={(e) => setFormData({...formData, license_type: e.target.value})} placeholder="e.g., Commercial, Open Source" />
+          </div>
+          <button type="submit" className="button">Update Product</button>
+          <button type="button" className="button-secondary" onClick={() => {setView('list'); setFormData({}); setSelectedProduct(null)}}>Cancel</button>
+        </form>
+      </div>
+    )
+  }
+
   return (
     <div>
       <div className="card">
@@ -244,13 +315,16 @@ function SupplierManagement() {
                   <h4 style={{marginTop: '1rem'}}>Products ({products.filter(p => p.supplier_id === supplier.id).length})</h4>
                   <ul style={{listStyle: 'none', padding: 0}}>
                     {products.filter(p => p.supplier_id === supplier.id).map(product => (
-                      <li key={product.id} style={{padding: '0.5rem', background: 'white', marginBottom: '0.5rem', borderRadius: '4px', display: 'flex', justifyContent: 'space-between'}}>
+                      <li key={product.id} style={{padding: '0.5rem', background: 'white', marginBottom: '0.5rem', borderRadius: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                         <div>
                           <strong>{product.name}</strong> {product.version && `v${product.version}`}
                           {product.description && <div style={{fontSize: '0.9em', color: '#666'}}>{product.description}</div>}
                           {product.license_type && <div style={{fontSize: '0.85em', color: '#999'}}>License: {product.license_type}</div>}
                         </div>
-                        <button className="button-danger" style={{alignSelf: 'center', padding: '0.25rem 0.5rem', fontSize: '0.9em'}} onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                        <div style={{display: 'flex', gap: '0.5rem'}}>
+                          <button className="button-secondary" style={{padding: '0.25rem 0.5rem', fontSize: '0.9em'}} onClick={() => handleEditProduct(product)}>Edit</button>
+                          <button className="button-danger" style={{padding: '0.25rem 0.5rem', fontSize: '0.9em'}} onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                        </div>
                       </li>
                     ))}
                   </ul>
