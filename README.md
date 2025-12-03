@@ -253,6 +253,40 @@ The home page displays:
 - Priority distribution for technical debt
 - Recent activity across all categories
 - Quick action buttons
+- **Generate Sample Data button** - Quickly populate the database with realistic demo data
+
+### Sample Data Generation
+
+To demonstrate the platform's capabilities, you can generate comprehensive sample data:
+
+**Via UI (Recommended):**
+1. Navigate to the Dashboard (home page)
+2. Click the "Generate Sample Data" button in the Quick Actions section
+3. Confirm the action (this will clear existing data)
+4. Wait for the success message
+
+**Via Command Line:**
+```bash
+# Docker environment
+docker compose exec backend python generate_sample_data.py
+
+# Local environment
+cd backend
+python generate_sample_data.py
+```
+
+**Sample Data Includes:**
+- 5 Suppliers (Microsoft, AWS, Red Hat, Oracle, Atlassian)
+- 12 Products across all suppliers
+- 6 Business Applications with various statuses and owners
+- 5 Architecture Decision Records (ADRs) with multiple decision options
+- 6 Technical Debt items with different priorities and links to ADRs
+
+This is perfect for:
+- Exploring the platform features
+- Testing integrations
+- Demonstrating to stakeholders
+- Training new users
 
 ### Business Applications
 
