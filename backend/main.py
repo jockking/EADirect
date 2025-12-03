@@ -292,6 +292,21 @@ def get_dashboard_stats(db: Session = Depends(get_db)):
     }
 
 
+@app.post("/sample-data/generate")
+def generate_sample_data(db: Session = Depends(get_db)):
+    """Generate sample data for demonstration purposes"""
+    try:
+        from generate_sample_data import generate_all_sample_data
+        success = generate_all_sample_data()
+
+        if success:
+            return {"success": True, "message": "Sample data generated successfully"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to generate sample data")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating sample data: {str(e)}")
+
+
 # Authentication Endpoints
 @app.post("/auth/login", response_model=LoginResponse)
 def login(login_data: LoginRequest, db: Session = Depends(get_db)):

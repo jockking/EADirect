@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FiPackage, FiFileText, FiAlertTriangle, FiShoppingBag, FiBox } from 'react-icons/fi'
+import { FiPackage, FiFileText, FiAlertTriangle, FiShoppingBag, FiBox, FiDatabase } from 'react-icons/fi'
 import { dashboardApi } from '../api'
+import axios from 'axios'
 
 function Home() {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [generatingSample, setGeneratingSample] = useState(false)
+  const [sampleMessage, setSampleMessage] = useState(null)
 
   useEffect(() => {
     loadDashboard()
@@ -23,6 +26,29 @@ function Home() {
       console.error(err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleGenerateSampleData = async () => {
+    if (!window.confirm('This will clear existing data and generate sample data. Continue?')) {
+      return
+    }
+
+    try {
+      setGeneratingSample(true)
+      setSampleMessage(null)
+      const response = await axios.post('/api/sample-data/generate')
+      setSampleMessage({ type: 'success', text: response.data.message })
+      // Reload dashboard to show new data
+      setTimeout(() => {
+        loadDashboard()
+        setSampleMessage(null)
+      }, 2000)
+    } catch (err) {
+      setSampleMessage({ type: 'error', text: 'Failed to generate sample data' })
+      console.error(err)
+    } finally {
+      setGeneratingSample(false)
     }
   }
 
@@ -194,6 +220,22 @@ function Home() {
         )}
       </div>
 
+      {/* Sample Data Message */}
+      {sampleMessage && (
+        <div className={sampleMessage.type === 'success' ? 'success-message' : 'error'} style={{
+          background: sampleMessage.type === 'success' ? '#d1fae5' : '#fee2e2',
+          color: sampleMessage.type === 'success' ? '#059669' : '#dc2626',
+          padding: '1rem',
+          borderRadius: '0.5rem',
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          {sampleMessage.text}
+        </div>
+      )}
+
       {/* Quick Actions */}
       <div className="card" style={{ marginTop: '1.5rem' }}>
         <h3 style={{ marginBottom: '1rem' }}>Quick Actions</h3>
@@ -213,6 +255,15 @@ function Home() {
           <Link to="/search">
             <button className="button-secondary">Search All</button>
           </Link>
+          <button
+            className="button-warning"
+            onClick={handleGenerateSampleData}
+            disabled={generatingSample}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            <FiDatabase />
+            {generatingSample ? 'Generating...' : 'Generate Sample Data'}
+          </button>
         </div>
       </div>
     </div>
