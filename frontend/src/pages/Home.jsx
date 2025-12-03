@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FiPackage, FiFileText, FiAlertTriangle, FiShoppingBag, FiBox, FiDatabase, FiMapPin } from 'react-icons/fi'
 import { dashboardApi, supplierApi } from '../api'
 import axios from 'axios'
+import SupplierMap from '../components/SupplierMap'
 
 function Home() {
   const [stats, setStats] = useState(null)
@@ -206,50 +207,7 @@ function Home() {
               </button>
             </Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
-            {suppliers.filter(s => s.address).map(supplier => (
-              <div key={supplier.id} style={{
-                padding: '0.75rem',
-                background: '#f8f9fa',
-                borderRadius: '4px',
-                border: '1px solid #e9ecef',
-                display: 'flex',
-                alignItems: 'start',
-                gap: '0.75rem'
-              }}>
-                <div style={{
-                  width: '32px',
-                  height: '32px',
-                  background: '#64748b',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  <FiMapPin size={18} color="white" />
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: '500', color: '#2c3e50', marginBottom: '0.25rem' }}>
-                    {supplier.name}
-                  </div>
-                  <div style={{ fontSize: '0.85rem', color: '#666', lineHeight: '1.4' }}>
-                    {supplier.address}
-                  </div>
-                  {supplier.website && (
-                    <a
-                      href={supplier.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none', marginTop: '0.25rem', display: 'inline-block' }}
-                    >
-                      Visit website →
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          <SupplierMap suppliers={suppliers} />
         </div>
       )}
 
