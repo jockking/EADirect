@@ -251,6 +251,7 @@ The home page displays:
 - Total counts for all entity types
 - Status breakdowns for apps, ADRs, and tech debt
 - Priority distribution for technical debt
+- **Interactive Supplier Location Map** - Visual geographic display of all supplier locations
 - Recent activity across all categories
 - Quick action buttons
 - **Generate Sample Data button** - Quickly populate the database with realistic demo data
@@ -320,9 +321,18 @@ Track and manage technical debt:
 
 Maintain supplier and product information:
 - Supplier contact details and websites
+- **Supplier addresses** displayed on interactive map
+- Edit supplier information including locations
 - Product catalogs with versions and licenses
 - Link products to business applications
 - Track support URLs and documentation
+
+**Interactive Map Features:**
+- Visual display of supplier locations on world map
+- Click markers to view supplier details
+- Automatic map centering and zoom
+- Links to supplier websites from map popups
+- Geographic distribution view of supplier base
 
 ### Search
 
